@@ -7,7 +7,6 @@ export interface User {
   phone:string;
   website:string;
   company:Company;
-
 }
 export interface Company{
     name:string;
@@ -21,7 +20,6 @@ export interface Address {
   zipcode: string;
   geo:Geo;
 }
-
 export interface Geo{
     lat:string;
     lbg:string;

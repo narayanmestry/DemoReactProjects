@@ -1,5 +1,13 @@
-import {legacy_createStore as createStore} from 'redux';
+import {legacy_createStore as createStore,applyMiddleware, combineReducers} from 'redux';
+import {thunk} from "redux-thunk";
 import { toggleReducer } from './toggleReducer';
+import { userReducer } from './userReducer';
 
-export const store = createStore(toggleReducer);
+
+const rootReducer = combineReducers({
+    toggleR : toggleReducer,
+    userR : userReducer
+})
+
+export const store = createStore(rootReducer,applyMiddleware(thunk));
 

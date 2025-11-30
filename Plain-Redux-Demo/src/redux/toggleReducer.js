@@ -9,5 +9,5 @@ export const toggleReducer = (state=initialState,action) =>{
             return {...state,toggle : !state.toggle}
         default:
             return state
-    }
+    }  
 }
