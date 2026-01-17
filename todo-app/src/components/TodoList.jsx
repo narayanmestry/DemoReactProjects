@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getAllTodos } from "../service/userService";
+import { getAllTodos } from "../service/userservice";
 function TodoList() {
   const [todos, setTodos] = useState([]);
   const [editId, setEditId] = useState(-1);
@@ -79,7 +79,6 @@ function TodoList() {
 
       <h4>Completed Task</h4>
       <ul className="todolist">
-        {/* Completed tasks will be rendered here */}
         {todos
           .filter((todo) => {
             return todo.completed === true;

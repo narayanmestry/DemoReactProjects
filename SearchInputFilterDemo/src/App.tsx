@@ -1,52 +1,52 @@
+import { useEffect, useState } from "react";
 import "./App.css";
-import { useEffect, useState, type ChangeEvent } from "react";
 import type { User } from "./Interface/UserInterface";
+
+
 function App() {
-const [users, setUsers] = useState<User[]>([]);
-const [inputValue,setInputValue] = useState<string>("");
+  const [userData, setUserData] = useState<User[]>([]);
+  const [searchInput, setSearchInput] = useState<string>("");
 
-const url = "https://jsonplaceholder.typicode.com/users";
+  const url = "https://jsonplaceholder.typicode.com/users";
 
-useEffect(() => {
-  const fetchUser = async()=>{
-    try{
-      const response = await fetch(url);
-      const data = await response.json();
-      console.log(data);
-      setUsers(data)
-    }catch(error){
-      console.error("Error fetching users:", error);
-    }
+  async function handleSearch(e: React.ChangeEvent<HTMLInputElement>) {
+    console.log("..", e.target.value);
+    setSearchInput(e.target.value)
   }
 
-  fetchUser();
-},[]);
-
-const handleInput = (e:ChangeEvent<HTMLInputElement>) => {
-  console.log(e.target.value);
-  setInputValue(e.target.value);
-}
-
-const filteredUsers = users.filter((user) => 
-  user.name.toLowerCase().includes(inputValue.toLowerCase())
-);
-
-console.log("----",filteredUsers);
+  // fetch user data
+  useEffect(() => {
+    async function getUserData() {
+      try {
+        const response = await fetch(url);
+        const data = await response.json();
+        console.log(data);
+        setUserData(data);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    getUserData();
+  }, []);
 
   return (
-    <div className="App">
-      <input type="text" name="inputValue" value={inputValue} onChange={handleInput} />
+    <>
+      <h1>Search Data Using Filter...</h1>
+      <input type="text" name="searchInput" onChange={handleSearch} />
+      <p style={{color:'white'}}>{searchInput}</p>
 
       <ul>
         {
-        filteredUsers.map((user) => (
-          <li key={user.id}>
-            {user.name} - {user.email}
-          </li>
-        ))
+          userData.map((user)=>{
+            return(
+              <>
+                <li style={{listStyle:'none',textAlign:'left'}}>{user.name}</li>
+              </>
+            )
+          })
         }
       </ul>
-    </div>
+    </>
   );
 }
 
